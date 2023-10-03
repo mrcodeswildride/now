@@ -1,0 +1,16 @@
+body {
+  background-color: beige;
+}
+
+div {
+  display: none;
+  margin-bottom: 30px;
+}
+
+p[id] {
+  font-size: 24px;
+}
+
+button {
+  padding: 5px;
+}

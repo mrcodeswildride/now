@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Now</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" />
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <h1>Now</h1>
+
+    <p>
+      Date.now() returns the number of milliseconds that have elapsed since midnight January 1, 1970
+      UTC.
+    </p>
+
+    <div id="section1">
+      <p>When this page loaded, Date.now() was called and returned:</p>
+      <p id="nowParagraph1"></p>
+      <p>That number of milliseconds is:</p>
+      <p id="timeSpanParagraph1"></p>
+      <p>That amount of time from midnight January 1, 1970 UTC is:</p>
+      <p id="timeUtcParagraph1"></p>
+      <p>
+        The time above is in UTC, which is a time standard based on the sun at 0° longitude, and not
+        adjusted for daylight savings.
+      </p>
+      <p>
+        UTC is 7 or 8 hours ahead of Pacific Time, depending on the time of year. The time below is
+        the same time in local time:
+      </p>
+      <p id="timeLocalParagraph"></p>
+      <p>Click the button below to call Date.now() again:</p>
+      <button id="nowButton">Call Date.now()</button>
+    </div>
+
+    <div id="section2">
+      <p>When the button was clicked, Date.now() was called and returned:</p>
+      <p id="nowParagraph2"></p>
+      <p>That number of milliseconds is:</p>
+      <p id="timeSpanParagraph2"></p>
+      <p>That amount of time from midnight January 1, 1970 UTC is:</p>
+      <p id="timeUtcParagraph2"></p>
+      <p>The difference between the two calls to Date.now() is:</p>
+      <p id="differenceParagraph"></p>
+    </div>
+  </body>
+</html>
