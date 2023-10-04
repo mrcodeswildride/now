@@ -18,7 +18,7 @@ function callNow(sectionNum) {
   // show the raw number of milliseconds, formatted time span, and current time in UTC
   section.style.display = `block`
   nowParagraph.innerHTML = now
-  timeSpanParagraph.innerHTML = timeSpan(now)
+  timeSpanParagraph.innerHTML = timeSpan(now, true)
   timeUtcParagraph.innerHTML = timeUtc(now)
 
   if (sectionNum == 1) {
@@ -35,9 +35,9 @@ function callNow(sectionNum) {
   }
 }
 
-function timeSpan(milliseconds) {
+function timeSpan(milliseconds, fromEpoch) {
   // get time parts as formatted strings and filter out zero values
-  let parts = getParts(milliseconds).filter(part => part != null)
+  let parts = getParts(milliseconds, fromEpoch).filter(part => part != null)
 
   if (parts.length == 1) {
     return parts[0]
@@ -52,22 +52,38 @@ function timeSpan(milliseconds) {
   return parts.join(`, `)
 }
 
-function getParts(milliseconds) {
-  // get time parts as entire values
-  let seconds = milliseconds / 1000
-  let minutes = seconds / 60
-  let hours = minutes / 60
-  let days = hours / 24
-  let months = days / 30.436875
-  let years = months / 12
+function getParts(milliseconds, fromEpoch) {
+  let seconds
+  let minutes
+  let hours
+  let days
+  let months
+  let years
 
-  // get time parts as normalized values
-  milliseconds = decimalPortion(seconds) * 1000
-  seconds = decimalPortion(minutes) * 60
-  minutes = decimalPortion(hours) * 60
-  hours = decimalPortion(days) * 24
-  days = decimalPortion(months) * 30.436875
-  months = decimalPortion(years) * 12
+  if (fromEpoch) {
+    let date = new Date(milliseconds)
+
+    // get time parts relative to midnight January 1, 1970 UTC
+    milliseconds = date.getUTCMilliseconds()
+    seconds = date.getUTCSeconds()
+    minutes = date.getUTCMinutes()
+    hours = date.getUTCHours()
+    days = date.getUTCDay()
+    months = date.getUTCMonth()
+    years = date.getUTCFullYear() - 1970
+  } else {
+    // get time parts as entire values
+    seconds = milliseconds / 1000
+    minutes = seconds / 60
+    hours = minutes / 60
+    days = hours / 24
+
+    // get time parts as normalized values
+    milliseconds = decimalPortion(seconds) * 1000
+    seconds = decimalPortion(minutes) * 60
+    minutes = decimalPortion(hours) * 60
+    hours = decimalPortion(days) * 24
+  }
 
   // return time parts as formatted strings
   return [
@@ -94,7 +110,7 @@ function decimalPortion(value) {
 function formatPart(value, unit) {
   value = Math.floor(value)
 
-  if (value == 0) {
+  if (!value) {
     return null
   }
 
