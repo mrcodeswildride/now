@@ -68,7 +68,7 @@ function getParts(milliseconds, fromEpoch) {
     seconds = date.getUTCSeconds()
     minutes = date.getUTCMinutes()
     hours = date.getUTCHours()
-    days = date.getUTCDay()
+    days = date.getUTCDate() - 1
     months = date.getUTCMonth()
     years = date.getUTCFullYear() - 1970
   } else {
