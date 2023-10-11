@@ -1,4 +1,3 @@
-let timeLocalParagraph = document.getElementById(`timeLocalParagraph`)
 let nowButton = document.getElementById(`nowButton`)
 let differenceParagraph = document.getElementById(`differenceParagraph`)
 
@@ -10,21 +9,16 @@ function callNow(sectionNum) {
   let section = document.getElementById(`section${sectionNum}`)
   let nowParagraph = document.getElementById(`nowParagraph${sectionNum}`)
   let timeSpanParagraph = document.getElementById(`timeSpanParagraph${sectionNum}`)
-  let timeUtcParagraph = document.getElementById(`timeUtcParagraph${sectionNum}`)
 
   // get the number of milliseconds that have elapsed since midnight January 1, 1970 UTC
   let now = Date.now()
 
-  // show the raw number of milliseconds, formatted time span, and current time in UTC
+  // show the raw number of milliseconds and formatted time span
   section.style.display = `block`
   nowParagraph.innerHTML = now
   timeSpanParagraph.innerHTML = timeSpan(now, true)
-  timeUtcParagraph.innerHTML = timeUtc(now)
 
   if (sectionNum == 1) {
-    // show current time in local time
-    timeLocalParagraph.innerHTML = timeLocal(now)
-
     // record the timestamp of when the page loaded and activate the button
     pageLoadedTimestamp = now
     nowButton.addEventListener(`click`, () => callNow(2))
@@ -119,34 +113,4 @@ function formatPart(value, unit) {
   }
 
   return `${value} ${unit}s`
-}
-
-function timeUtc(milliseconds) {
-  let timeString = new Date(milliseconds).toLocaleString([], {
-    year: `numeric`,
-    month: `long`,
-    day: `numeric`,
-    hour: `numeric`,
-    minute: `numeric`,
-    second: `numeric`,
-    fractionalSecondDigits: 3,
-    hour12: false,
-    timeZone: `UTC`,
-  })
-
-  return `${timeString} UTC`
-}
-
-function timeLocal(milliseconds) {
-  let timeString = new Date(milliseconds).toLocaleString([], {
-    year: `numeric`,
-    month: `long`,
-    day: `numeric`,
-    hour: `numeric`,
-    minute: `numeric`,
-    second: `numeric`,
-    fractionalSecondDigits: 3,
-  })
-
-  return timeString
 }
